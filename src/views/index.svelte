@@ -1,4 +1,12 @@
 <script>
+  let params = new URLSearchParams(window.location.search);
+  let g = params.get("g");
+  let v = params.get("v");
+
+  const handleChangeParams = (group, various) => {
+    window.location.replace(`?g=${group}&v=${various || ""}`);
+  };
+
   let circleBox;
   let isDragging = false;
   let startX = 0;
@@ -26,8 +34,15 @@
   on:mouseleave={() => (isDragging = false)}
   on:mousemove={handleMouseMove}
 >
-  {#each [...Array(23)] as _, i}
-    <div class="circle"><h3>{i + 1}</h3></div>
+  {#each ["scale-up", "scale-down", "rotate", "rotate-scale", "rotate-90", "flip", "flip-2", "flip-scale", "flip-scale-2", "swing", "slide", "slide-bck", "slide-fwd", "slide-rotate", "shadow-drop", "shadow-drop-2", "shadow-pop", "shadow-inset"] as group}
+    <button
+      style="background-color: {group === g ? '#c1876b' : ''};"
+      class="circle"
+      on:click={() => handleChangeParams(group)}
+    >
+      <h4>{group}</h4>
+    </button>
+    <div />
   {/each}
 </div>
 <div class="circle-box-item">
@@ -58,10 +73,9 @@
     align-items: center;
     color: #fff;
     cursor: pointer;
-  }
-
-  .circle:focus {
-    background-color: #c1876b;
+    border: none;
+    font-size: 15px;
+    text-transform: uppercase;
   }
 
   .circle-box::-webkit-scrollbar {
