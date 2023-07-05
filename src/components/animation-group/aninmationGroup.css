@@ -22,6 +22,8 @@
   border: none;
   font-size: 15px;
   text-transform: uppercase;
+  white-space: normal;
+  padding: 5px;
 }
 
 .circle-group > div {

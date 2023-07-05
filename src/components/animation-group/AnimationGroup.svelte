@@ -3,14 +3,17 @@
   import { navigate } from "svelte-routing";
   import animGroupList from "./animation-group-list.json";
 
-  let params = new URLSearchParams(window.location.search);
-  let g = params.get("g") || "scale-up";
-  let v = params.get("v");
+  export let g;
+  export let v;
+  export let setGroup;
+  export let setVarious;
+  export let handleVActive;
 
   const handleChangeParams = (group, various) => {
-    if (group) g = group;
-    if (various) v = various;
+    if (various) setVarious(various);
+    if (group) setGroup(group);
     navigate(`/basic?g=${group}&v=${various || ""}`, { replace: true });
+    handleVActive();
   };
 
   let circleBox;
@@ -42,16 +45,16 @@
   on:mouseleave={() => (isDragging = false)}
   on:mousemove={handleMouseMove}
 >
-  {#each animGroupList as group}
+  {#each animGroupList as item}
     <div class="circle-group">
       <button
-        style="background-color: {group.key === g ? '#c1876b' : ''};"
+        style="background-color: {item.key === g ? '#c1876b' : ''};"
         class="circle"
-        on:click={() => handleChangeParams(group.key)}
+        on:click={() => handleChangeParams(item.key)}
       >
-        <h4>{group.label}</h4>
+        <h4>{item.label}</h4>
       </button>
-      {#if group.key === g}
+      {#if item.key === g}
         <div>
           <i class="fa-solid fa-caret-up" />
         </div>
@@ -60,12 +63,12 @@
   {/each}
 </div>
 <div class="circle-box-item">
-  {#each animVariousList.item as various}
+  {#each animVariousList.item as item}
     <button
-      class={v === various.label ? "isVariousSelected" : ""}
-      on:click={() => handleChangeParams("", various.label)}
+      class={v === item.label ? "isVariousSelected" : ""}
+      on:click={() => handleChangeParams(g, item.label)}
     >
-      {various.label}
+      {item.label}
     </button>
   {/each}
 </div>
