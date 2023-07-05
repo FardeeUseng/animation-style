@@ -1,7 +1,6 @@
 <script>
   import Navbar from "./components/navbar/Navbar.svelte";
   import Routes from "./routes/Routes.svelte";
-  // import View from "./views/index.svelte";
 </script>
 
 <Navbar />

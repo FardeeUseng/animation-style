@@ -1,5 +1,8 @@
 <div class="navbar">
-  <h2>Animation Style</h2>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <h2 on:click={() => window.location.replace("/", "_self")}>
+    Animation Style
+  </h2>
   <div class="profile">
     <h4>Dee</h4>
     <img
@@ -18,6 +21,9 @@
     padding: 0 10px 0 10px;
     background-color: #646b63;
     color: #fff;
+  }
+  .navbar > h2 {
+    cursor: pointer;
   }
   .profile {
     display: flex;
